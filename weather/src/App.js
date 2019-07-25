@@ -9,37 +9,45 @@ class App extends React.Component {
 
   state = {
     temp: undefined,
-    city:undefined,
-    country:undefined,
-    error:undefined
+    city: undefined,
+    country: undefined,
+    error: undefined
   }
 
-    gettingWeather = async (e) => {
-      e.preventDefault();
-      const city = e.target.elements.city.value;
+  gettingWeather = async (e) => {
+    e.preventDefault();
+    const city = e.target.elements.city.value;
+
+    if (city) {
       const api_URL = await
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`)
       const data = await api_URL.json()
-      console.log(data)
-
       this.setState({
         temp: data.main.temp,
         city: data.name,
         country: data.sys.country,
-        error: ""
+        error: undefined
+      });
+    } else {
+      this.setState({
+        temp: undefined,
+        city: undefined,
+        country: undefined,
+        error: "Введите название города"
       });
     }
+  }
 
   render() {
     return (
       <div>
         <Info />
         <Form gettingWeather={this.gettingWeather} />
-        <Weather 
-        temp = {this.state.temp} 
-        city = {this.state.city} 
-        country = {this.state.country} 
-        teerrormp = {this.state.error} 
+        <Weather
+          temp={this.state.temp}
+          city={this.state.city}
+          country={this.state.country}
+          error={this.state.error}
         />
       </div>
     );
