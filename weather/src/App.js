@@ -40,7 +40,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className = 'wrapper'>
         <Info />
         <Form gettingWeather={this.gettingWeather} />
         <Weather
